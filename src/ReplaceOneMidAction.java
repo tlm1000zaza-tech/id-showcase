@@ -10,7 +10,7 @@ public class ReplaceOneMidAction extends Action {
     }
 
     @Override
-    void execute(Game game, PlayerPoker player) throws Exception {
+    void execute(Game game, PlayerPoker player) {
 
         if(!canUse(game, player)) {
 

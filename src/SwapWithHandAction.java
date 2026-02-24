@@ -7,7 +7,7 @@ public class SwapWithHandAction extends Action {
     }
 
     @Override
-    public void execute(Game game, PlayerPoker player) throws Exception {
+    public void execute(Game game, PlayerPoker player)  {
 
         if(!canUse(game, player)) {
 

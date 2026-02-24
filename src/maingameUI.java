@@ -10,11 +10,14 @@ public class maingameUI extends JPanel {
     private List<JLabel> odinaryButton = new ArrayList<>();
     private List<JLabel> hand = new ArrayList<>();
     private List<JLabel> middle = new ArrayList<>();
+    private List<JLabel> condition = new ArrayList<>();
     private JLabel targetBlock = new JLabel();
     private JLabel levelBlock = new JLabel();
     private JLabel scoreBlock = new JLabel();
     private JLabel player = new JLabel();
     private JLabel deck = new JLabel();
+    private List<String> a = new ArrayList<>();
+    private List<String> conditionString = new ArrayList<>();
 
     private Font font = new Font("Arial", Font.BOLD, 15);
     private Font font2 = new Font("Arial", Font.BOLD, 10);
@@ -79,13 +82,35 @@ public class maingameUI extends JPanel {
                 }
 
             } else if (Channel == Remote.MIDDLESHOW_CHANNEL) {
-
-                if (data instanceof List) {
-                    List<String> listcardskibidi = (List<String>) data;
-                    for (String ct : listcardskibidi) {
-                        middle.get(listcardskibidi.indexOf(ct)).setText(ct);
-                    }
+                List<String> nlist = (List<String>) data;
+                System.out.println("[MIDDLE]" +middle.size());
+                System.out.println("[DATA]" + nlist.size());
+                for (int i = 0; i < nlist.size(); i++) {
+                    middle.get(i).setText(nlist.get(i));
                 }
+            } else if (Channel == Remote.END_CHANNEL) {
+                for (ActionPanel acp : actionPanels) {
+                    acp.setDisable();
+                }
+                a.clear();
+                conditionString.clear();
+                for (JLabel jLabel : middle) {
+                    jLabel.setText("");
+                }
+                for (JLabel jLabel : condition) {
+                    jLabel.setText("");
+                }
+            } else if (Channel == Remote.CONDITION_CHANNEL) {
+                String con = (String) data;
+                conditionString.add(con);
+                System.out.println("[MAIN] - " + con);
+                for (int i = 0; i < conditionString.size(); i++) {
+                    condition.get(i).setText(conditionString.get(i));
+                }
+
+
+            } else if (Channel == Remote.SCORE_CHANNEL) {
+                scoreBlock.setText("Score : " + String.valueOf(data));
             }
         });
     }
@@ -118,8 +143,8 @@ public class maingameUI extends JPanel {
 
         for (int i = 0; i < 3; i++) {
             JLabel n = new JLabel();
-            n.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
-            listCard.add(n);
+            n.setBorder(BorderFactory.createLineBorder(Color.BLUE,2));
+            condition.add(n);
             add(n);
             UIHelper.apply(n,0.06,0,0.95 - (i*0.07),0
                     ,0.15,0,0.1,0,

@@ -45,7 +45,7 @@ public abstract class Action {
 
     abstract String setName();
 
-    abstract void execute(Game game, PlayerPoker player) throws Exception;
+    abstract void execute(Game game, PlayerPoker player) ;
 
 
     // =========================

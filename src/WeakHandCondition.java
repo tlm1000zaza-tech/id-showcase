@@ -6,7 +6,7 @@ public class WeakHandCondition extends SpecialCondition {
     }
 
     @Override
-    public void apply(Game game, PlayerPoker player) throws Exception {
+    public void apply(Game game, PlayerPoker player)  {
 
         // ตั้ง limit
         game.setHandSizeLimit(1);

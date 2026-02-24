@@ -80,6 +80,9 @@ public class Middle {
 
         cards.add(card);
 
+//        RemoteEvent.Event().fireEvent(Remote.MIDDLESHOW_CHANNEL , (card.toString() + statusget(cards.indexOf(card))));
+//        RemoteEvent.Event().fireEvent(Remote.MIDDLESHOW_CHANNEL , (card.toString()));
+
     }
 
 
@@ -210,23 +213,23 @@ public class Middle {
     // ResetMiddle
     // ========================================
 
-    public void setCard(int index, Card card) throws Exception {
+    public void setCard(int index, Card card) {
 
         if(!validIndex(index)) {
 
-            throw new Exception("Invalid index");
+            System.out.println("Invalid index");
 
         }
 
         if(doubleLocked[index]) {
 
-            throw new Exception("Card is DOUBLE LOCKED");
+            System.out.println("Card is DOUBLE LOCKED");
 
         }
 
         if(locked[index]) {
 
-            throw new Exception("Card is LOCKED");
+            System.out.println("Card is LOCKED");
 
         }
 
@@ -284,7 +287,7 @@ public class Middle {
     // RESTORE SIZE (ใช้กับ LimitedRevealCondition)
     // ========================================
 
-    public void restoreToMaxSize(Game game) throws Exception {
+    public void restoreToMaxSize(Game game)  {
 
         while(cards.size() < game.getMaxMiddleCards()) {
 
@@ -300,8 +303,8 @@ public class Middle {
     // ========================================
 
     public void show() {
-        List<String> sent = new ArrayList<>();
         System.out.println("\n--- MIDDLE ---");
+        List<String> stringsshow = new ArrayList<>();
 
         for(int i = 0; i < cards.size(); i++) {
 
@@ -317,11 +320,32 @@ public class Middle {
                 status = " [LOCK]";
 
             }
+            System.out.println("[CARD] " + cards.get(i).isHidden());
+            System.out.println("[HIDDEN ?] " + cards.get(i).isHidden());
+            System.out.println("[LOCKED ?] " + cards.get(i).isLocked());
 
             System.out.println(i + ": " + cards.get(i) + status);
-            sent.add(cards.get(i) + status);
+
+            stringsshow.add(cards.get(i) + status);
         }
-        RemoteEvent.Event().fireEvent(Remote.MIDDLESHOW_CHANNEL , sent);
+        RemoteEvent.Event().fireEvent(Remote.MIDDLESHOW_CHANNEL, stringsshow);
+    }
+
+    private String statusget(int i) {
+        String status = "";
+
+        if(doubleLocked[i]) {
+
+            status = " [DOUBLE LOCK]";
+
+        }
+        else if(locked[i]) {
+
+            status = " [LOCK]";
+
+        }
+
+        return  status;
     }
 
 

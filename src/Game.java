@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class Game {
+public class  Game {
 
     // ============================================
     // CORE GAME OBJECTS
@@ -42,7 +42,7 @@ public class Game {
 
     private int defaultMaxMiddleCards = 3;
 
-    private int maxMiddleCards = defaultMaxMiddleCards;
+    private final int maxMiddleCards = 5;
 
 
     // ============================================
@@ -84,12 +84,22 @@ public class Game {
         player = new Player();
 
         conditionPool = new ArrayList<>();
+        level = 1;
+        score = 100;
 
         RemoteEvent.Event().onEvent((Channel, data) -> {
             if (Channel == Remote.PASS_CHANNEL) {
-                passaction();
+                if ( level <= MAX_LEVEL) {
+                    passaction();
+                    middle.show();
+                } else {
+                    System.out.println("ended");
+                }
+
             }
         });
+
+        Init();
 
     }
 
@@ -97,7 +107,7 @@ public class Game {
     // MAIN GAME LOOP
     // ============================================
 
-    public void runGame() throws Exception {
+    public void runGame()  {
 
         System.out.println("===== START GAME =====");
 
@@ -133,12 +143,75 @@ public class Game {
 
     }
 
+    public void Init()  {
+        System.out.println("===== START GAME =====");
+        RemoteEvent.Event().fireEvent(Remote.STAGE_CHANNEL, level);
+        RemoteEvent.Event().fireEvent(Remote.SCORE_CHANNEL, score);
+        conditionPool.clear();
+        deck = new Deck();
+        setTargetRank();
+        setupActionPool();
+        setupAction();
+        setupconditionPool();
+        generateActiveConditions();
+
+        getMiddle().clear();
+        player.getHand().clear();
+        player.resetAllActions();
+        handSizeLimit = 2;
+
+        for(Action action : player.getActions()) {
+
+            action.resetExtraCost();
+
+            action.resetUsage();
+
+            action.resetMaxUse();
+
+        }
+
+        System.out.println("===== LEVEL " + level + " =====");
+
+        System.out.println("DEBUG: Loaded actions = " + player.getActions().size());
+
+        System.out.println("TARGET : " + targetRank);
+
+        System.out.println("SCORE : " + score);
+
+        for(int i = 0; i < 3; i++) {
+
+            middle.placeCard(drawCard());
+
+        }
+        System.out.println("TEST");
+        int drawCount = handSizeLimit;
+
+        for(int i = 0; i < drawCount; i++) {
+            Card dcard =  drawCard();
+            player.getHand().addCard(dcard);
+
+        }
+
+        System.out.println("\n=== SPECIAL CONDITIONS ===");
+
+        for(SpecialCondition condition : activeConditions) {
+
+            System.out.println("- " + condition.getName());
+
+            condition.apply(this, player);
+
+        }
+
+        System.out.println("==========================\n");
+        middle.show();
+        player.getHand().showHand();
+    }
 
     // ============================================
     // START MENU
     // ============================================
 
-    public void showStartMenu() throws Exception {
+    public void showStartMenu()  {
 
         System.out.println("1. Play Again");
 
@@ -198,15 +271,9 @@ public class Game {
     // START LEVEL
     // ============================================
 
-    public void start() throws Exception {
+    public void start()  {
 
-        getMiddle().clear();
 
-        player.getHand().clear();
-
-        player.resetAllActions();
-
-        handSizeLimit = 2;
 
 
         // reset action state
@@ -398,7 +465,7 @@ public class Game {
     }
 
 
-    public void useAction(PlayerPoker player,int actionIndex) throws Exception {
+    public void useAction(PlayerPoker player,int actionIndex)  {
 
         List<Action> actions = player.getActions();
 
@@ -441,7 +508,7 @@ public class Game {
     // ============================================
 
     private void endLevel() {
-
+        RemoteEvent.Event().fireEvent(Remote.END_CHANNEL, null);
         System.out.println("\n===== END LEVEL " + level + " =====");
 
         ArrayList<Card> allCards = new ArrayList<>();
@@ -487,6 +554,17 @@ public class Game {
         luckyDrawActive = false;
 
         System.out.println("=========================\n");
+
+        level++;
+        System.out.println(middle.size());
+        middle.clear();
+        System.out.println(middle.size());
+        if ( level <= MAX_LEVEL) {
+            Init();
+        } else {
+            showFinalResult();
+            showStartMenu();
+        }
 
     }
 
@@ -837,7 +915,7 @@ public class Game {
 //
 // และห้ามซ้ำ
 // ========================================
-    private void generateActiveConditions() throws Exception {
+    private void generateActiveConditions()  {
 
         if(conditionPool == null || conditionPool.isEmpty()) {
 
@@ -904,6 +982,7 @@ public class Game {
             if(!alreadyExists) {
 
                 activeConditions.add(condition);
+                RemoteEvent.Event().fireEvent(Remote.CONDITION_CHANNEL, condition.getName());
 
             }
 
@@ -1061,7 +1140,7 @@ public class Game {
     // ใช้โดย LimitedRevealCondition
     // ========================================
     public void setMaxMiddleCards(int value) {
-        maxMiddleCards = Math.max(3,value);
+//        maxMiddleCards = Math.max(3,value);
     }
 
 
@@ -1090,7 +1169,7 @@ public class Game {
     // LuckyDraw
     // refill hand
     // ========================================
-    public void resetAllConditionEffects() throws Exception {
+    public void resetAllConditionEffects() {
 
 
         // reset hand limit
@@ -1199,13 +1278,13 @@ public class Game {
     }
 
 
-    public void refillPlayerHand(PlayerPoker player) throws Exception {
+    public void refillPlayerHand(PlayerPoker player) {
         while(player.getHand().size() < handSizeLimit) {
             player.getHand().addCard(drawCard());
         }
     }
     public void resetMaxMiddleCards() {
-        maxMiddleCards = defaultMaxMiddleCards;
+//        maxMiddleCards = defaultMaxMiddleCards;
     }
     public ArrayList<SpecialCondition> getActiveConditions() {
         return activeConditions;

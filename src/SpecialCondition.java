@@ -88,7 +88,7 @@ public abstract class SpecialCondition {
 
     public abstract void apply(Game game,
                                PlayerPoker player)
-            throws Exception;
+            ;
 
 
 

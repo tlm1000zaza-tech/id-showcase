@@ -122,12 +122,10 @@ public class Deck {
     // LuckyDraw preview
     // ========================================
 
-    public Card peekTopCard() throws Exception {
+    public Card peekTopCard() {
 
         if(isEmpty()) {
-
-            throw new Exception("Deck is empty");
-
+            System.out.println("Deck is empty");
         }
 
         // ⭐ FIX สำคัญ

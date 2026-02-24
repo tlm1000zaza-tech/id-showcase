@@ -78,11 +78,11 @@ public class Hand {
     // EmergencyDrawAction
     // ========================================
 
-    public void setCard(int index, Card card) throws Exception {
+    public void setCard(int index, Card card) {
 
         if(!isValidIndex(index)) {
 
-            throw new Exception("Invalid hand index");
+            System.out.println("Invalid hand index");
 
         }
 

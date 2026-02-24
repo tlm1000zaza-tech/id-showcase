@@ -7,7 +7,7 @@ public class PerfectResetAction extends Action{
     }
 
     @Override
-    void execute(Game game, PlayerPoker player) throws Exception {
+    void execute(Game game, PlayerPoker player) {
 
         Middle middle = game.getMiddle();
         Hand hand = player.getHand();
