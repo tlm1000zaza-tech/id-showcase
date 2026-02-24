@@ -9,7 +9,7 @@ public class ButtonPanel extends JPanel {
         RemoteEvent.Event().fireEvent(Remote.ACTION_CHANNEL, null);
     };
     private ActionListener pass = e -> {
-        System.out.println("Pass");
+        RemoteEvent.Event().fireEvent(Remote.PASS_CHANNEL, null);
     };
 
     ButtonPanel() {

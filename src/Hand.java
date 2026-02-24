@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 
 // ========================================
 // Hand Class
@@ -128,7 +129,7 @@ public class Hand {
     // ========================================
 
     public void showHand() {
-
+        List<String> n = new ArrayList<>();
         System.out.println("\n--- HAND ---");
 
         if(cards.isEmpty()) {
@@ -140,11 +141,11 @@ public class Hand {
         }
 
         for(int i = 0; i < cards.size(); i++) {
-            RemoteEvent.Event().fireEvent(Remote.SHOW_CHANNEL, cards.get(i));
+
             System.out.println(i + ": " + cards.get(i));
-
+            n.add(cards.get(i).toString());
         }
-
+        RemoteEvent.Event().fireEvent(Remote.SHOW_CHANNEL, n);
     }
 
 

@@ -9,12 +9,13 @@ public class maingameUI extends JPanel {
     private List<ButtonPanel> Button = new ArrayList<>();
     private List<JLabel> odinaryButton = new ArrayList<>();
     private List<JLabel> hand = new ArrayList<>();
+    private List<JLabel> middle = new ArrayList<>();
     private JLabel targetBlock = new JLabel();
     private JLabel levelBlock = new JLabel();
     private JLabel scoreBlock = new JLabel();
     private JLabel player = new JLabel();
     private JLabel deck = new JLabel();
-    private List<Card> tc =new ArrayList<>();
+
     private Font font = new Font("Arial", Font.BOLD, 15);
     private Font font2 = new Font("Arial", Font.BOLD, 10);
     maingameUI() {
@@ -33,7 +34,6 @@ public class maingameUI extends JPanel {
 
         RemoteEvent.Event().onEvent((Channel, data) -> {
             if (Channel==Remote.STAGE_CHANNEL) {
-                tc.clear();
                 System.out.println("[MAINUI] - RECEIVE DATA : " + data );
                 if (data instanceof Integer) {
                     levelBlock.setText("Level : " + data);
@@ -70,18 +70,22 @@ public class maingameUI extends JPanel {
                     ap.setEnable();
                 }
             } else if (Channel == Remote.SHOW_CHANNEL) {
-
-                if (data instanceof Card) {
-                    Card tempcard = (Card) data;
-                    tc.add(tempcard);
-                    for (Card cil : tc) {
-                        hand.get(tc.indexOf(cil)).setText(cil.toString());
-                    }
+                List<String> fg = (List<String>) data;
+                for (JLabel n : hand) {
+                    n.setText("");
+                }
+                for (String h : fg) {
+                    hand.get(fg.indexOf(h)).setText(h);
                 }
 
+            } else if (Channel == Remote.MIDDLESHOW_CHANNEL) {
 
-
-
+                if (data instanceof List) {
+                    List<String> listcardskibidi = (List<String>) data;
+                    for (String ct : listcardskibidi) {
+                        middle.get(listcardskibidi.indexOf(ct)).setText(ct);
+                    }
+                }
             }
         });
     }
@@ -105,7 +109,7 @@ public class maingameUI extends JPanel {
         for (int i = 0; i < 5; i++) {
             JLabel n = new JLabel();
             n.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
-            listCard.add(n);
+            middle.add(n);
             add(n);
             UIHelper.apply(n,0.06,0,0.40 + (i*0.07),0
                     ,0.15,0,0.40,0,

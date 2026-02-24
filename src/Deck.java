@@ -96,13 +96,13 @@ public class Deck {
     // Action
     // ========================================
 
-    public Card drawCard() throws Exception {
+    public Card drawCard()  {
 
-        if(isEmpty()) {
-
-            throw new Exception("Deck is empty");
-
-        }
+//        if(isEmpty()) {
+//
+//            throw new Exception("Deck is empty");
+//
+//        }
 
         // draw จาก "top deck"
         Card card = cards.remove(cards.size() - 1);

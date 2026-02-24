@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 
 // ========================================
 // Middle Class
@@ -299,7 +300,7 @@ public class Middle {
     // ========================================
 
     public void show() {
-
+        List<String> sent = new ArrayList<>();
         System.out.println("\n--- MIDDLE ---");
 
         for(int i = 0; i < cards.size(); i++) {
@@ -318,9 +319,9 @@ public class Middle {
             }
 
             System.out.println(i + ": " + cards.get(i) + status);
-
+            sent.add(cards.get(i) + status);
         }
-
+        RemoteEvent.Event().fireEvent(Remote.MIDDLESHOW_CHANNEL , sent);
     }
 
 

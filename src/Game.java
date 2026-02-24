@@ -85,6 +85,12 @@ public class Game {
 
         conditionPool = new ArrayList<>();
 
+        RemoteEvent.Event().onEvent((Channel, data) -> {
+            if (Channel == Remote.PASS_CHANNEL) {
+                passaction();
+            }
+        });
+
     }
 
     // ============================================
@@ -349,6 +355,7 @@ public class Game {
 
 
 
+
                 default:
 
                     System.out.println("Invalid choice.");
@@ -363,6 +370,33 @@ public class Game {
     // ============================================
     // USE ACTION
     // ============================================
+    private void passaction()  {
+        System.out.println("[SIZE] : "+middle.size());
+        System.out.println("[max] : "+maxMiddleCards);
+        System.out.println("\nPass...");
+
+        if(middle.size() < maxMiddleCards) {
+
+            Card newCard = drawCard();
+
+            middle.placeCard(newCard);
+
+            revealedCount++;
+
+            System.out.println("Revealed: " + newCard);
+
+        }
+        else {
+
+            System.out.println("\nAll cards revealed.");
+
+            endLevel();
+
+            return;
+
+        }
+    }
+
 
     public void useAction(PlayerPoker player,int actionIndex) throws Exception {
 
@@ -980,7 +1014,7 @@ public class Game {
     // DRAW CARD
     // ดึง card จาก deck และ apply condition
     // ========================================
-    public Card drawCard() throws Exception {
+    public Card drawCard()  {
 
         Card card = deck.drawCard();
 
