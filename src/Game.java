@@ -100,7 +100,7 @@ public class Game {
         score = 100;
 
         while(level <= MAX_LEVEL) {
-
+            RemoteEvent.Event().fireEvent(Remote.STAGE_CHANNEL, level);
             conditionPool.clear();
 
             deck = new Deck();
