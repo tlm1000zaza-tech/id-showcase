@@ -6,7 +6,7 @@ public class ButtonPanel extends JPanel {
     private JPanel passBtn = new JPanel();
     private JButton button = new JButton("BUTTY");
     private ActionListener action = e -> {
-        System.out.println("Action");
+        RemoteEvent.Event().fireEvent(Remote.ACTION_CHANNEL, null);
     };
     private ActionListener pass = e -> {
         System.out.println("Pass");
@@ -24,10 +24,13 @@ public class ButtonPanel extends JPanel {
     public void setAc() {
         button.removeActionListener(pass);
         button.addActionListener(action);
+        button.setText("ACTION");
+
 
     }
     public void setPass() {
         button.removeActionListener(action);
         button.addActionListener(pass);
+        button.setText("PASS");
     }
 }

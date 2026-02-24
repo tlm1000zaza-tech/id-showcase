@@ -140,7 +140,7 @@ public class Hand {
         }
 
         for(int i = 0; i < cards.size(); i++) {
-
+            RemoteEvent.Event().fireEvent(Remote.SHOW_CHANNEL, cards.get(i));
             System.out.println(i + ": " + cards.get(i));
 
         }

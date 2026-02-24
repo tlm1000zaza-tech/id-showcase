@@ -236,8 +236,8 @@ public class Game {
         int drawCount = handSizeLimit;
 
         for(int i = 0; i < drawCount; i++) {
-
-            player.getHand().addCard(drawCard());
+            Card dcard =  drawCard();
+            player.getHand().addCard(dcard);
 
         }
 
@@ -517,6 +517,7 @@ public class Game {
                 break;
 
         }
+
     }
 
     private boolean checkOnePair(List<Card> cards) {

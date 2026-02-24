@@ -5,14 +5,18 @@ import java.util.List;
 
 public class maingameUI extends JPanel {
     private List<JLabel> listCard = new ArrayList<>();
+    private List<ActionPanel> actionPanels = new ArrayList<>();
     private List<ButtonPanel> Button = new ArrayList<>();
     private List<JLabel> odinaryButton = new ArrayList<>();
+    private List<JLabel> hand = new ArrayList<>();
     private JLabel targetBlock = new JLabel();
     private JLabel levelBlock = new JLabel();
     private JLabel scoreBlock = new JLabel();
     private JLabel player = new JLabel();
     private JLabel deck = new JLabel();
-    private Font font = new Font("Arial", Font.BOLD, 20);
+    private List<Card> tc =new ArrayList<>();
+    private Font font = new Font("Arial", Font.BOLD, 15);
+    private Font font2 = new Font("Arial", Font.BOLD, 10);
     maingameUI() {
         odinaryButton.add(targetBlock);
         odinaryButton.add(scoreBlock);
@@ -29,10 +33,55 @@ public class maingameUI extends JPanel {
 
         RemoteEvent.Event().onEvent((Channel, data) -> {
             if (Channel==Remote.STAGE_CHANNEL) {
+                tc.clear();
                 System.out.println("[MAINUI] - RECEIVE DATA : " + data );
                 if (data instanceof Integer) {
                     levelBlock.setText("Level : " + data);
+                    int ndata = (int) data;
+                    if (ndata==1) {
+                        for (int i = 0; i < 5; i++) {
+                            actionPanels.get(i).canUseable();
+                        }
+                        targetBlock.setText("TARGET : ONE PAIR");
+                    } else if (ndata==2) {
+                        for (int i = 0; i < 6; i++) {
+                            actionPanels.get(i).canUseable();
+                        }
+                        targetBlock.setText("TARGET : THREE OF A KIND");
+                    } else if (ndata==3) {
+                        for (int i = 0; i < 7; i++) {
+                            actionPanels.get(i).canUseable();
+                        }
+                        targetBlock.setText("TARGET : FLUSH");
+                    }else if (ndata==4) {
+                        for (int i = 0; i < 9; i++) {
+                            actionPanels.get(i).canUseable();
+                        }
+                        targetBlock.setText("TARGET : FOUR OF A KIND");
+                    }else if (ndata==5) {
+                        for (int i = 0; i < 12; i++) {
+                            actionPanels.get(i).canUseable();
+                        }
+                        targetBlock.setText("TARGET : ROYAL FLUSH");
+                    }
                 }
+            } else if (Channel == Remote.ACTION_CHANNEL) {
+                for (ActionPanel ap : actionPanels) {
+                    ap.setEnable();
+                }
+            } else if (Channel == Remote.SHOW_CHANNEL) {
+
+                if (data instanceof Card) {
+                    Card tempcard = (Card) data;
+                    tc.add(tempcard);
+                    for (Card cil : tc) {
+                        hand.get(tc.indexOf(cil)).setText(cil.toString());
+                    }
+                }
+
+
+
+
             }
         });
     }
@@ -41,13 +90,16 @@ public class maingameUI extends JPanel {
 
         // action
         for (int i = 0; i < 12; i++) {
-            JLabel n = new JLabel();
+            ActionPanel n = new ActionPanel();
             n.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
-            listCard.add(n);
+            actionPanels.add(n);
             add(n);
             UIHelper.apply(n,0.06,0,0.12 + (i*0.07),0
                     ,0.15,0,0.9,0,
                     0.5,0.5);
+            n.Init();
+            n.setDisable();
+            n.setText(String.valueOf(i+1));
         }
         //maddle
         for (int i = 0; i < 5; i++) {
@@ -73,8 +125,9 @@ public class maingameUI extends JPanel {
         for (int i = 0; i < 2; i++) {
             JLabel n = new JLabel();
             n.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
-            listCard.add(n);
+            hand.add(n);
             add(n);
+            n.setFont(font2);
             UIHelper.apply(n,0.06,0,0.45 + (i*0.10),0
                     ,0.15,0,0.60,0,
                     0.5,0.5);

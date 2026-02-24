@@ -4,6 +4,7 @@ import java.awt.event.ActionListener;
 public class ActionPanel extends JPanel {
     private JPanel actionBtn = new JPanel();
     private JPanel passBtn = new JPanel();
+    private boolean isUseable;
     private JButton button = new JButton("BUTTY");
     private ActionListener pass = e -> {
         System.out.println("Pass");
@@ -23,6 +24,19 @@ public class ActionPanel extends JPanel {
         button.setEnabled(false);
     }
     public void setEnable() {
-        button.setEnabled(true);
+        if (isUseable) {
+            button.setEnabled(true);
+        }
+    }
+    public void setText(String txt) {
+        button.setText("Action : " + txt);
+    }
+
+    public void canUseable() {
+        isUseable = true;
+    }
+
+    public boolean isUseable() {
+        return isUseable;
     }
 }
