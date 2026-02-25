@@ -3,12 +3,11 @@ import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MiddlePanel extends JPanel {
+public class PeekPanel extends JPanel {
     private JPanel actionBtn = new JPanel();
     private JPanel passBtn = new JPanel();
     private boolean isUseable;
     private int index;
-    private Card card;
     private ActionTai soul;
     private JButton buttonselect = new JButton("");
     private List<JButton> bt = new ArrayList<>();
@@ -18,7 +17,7 @@ public class MiddlePanel extends JPanel {
         System.out.println("E");
     };
 
-    MiddlePanel() {
+    PeekPanel() {
         setLayout(null);
         buttonLock.setContentAreaFilled(false);
         bt.add(buttonselect);
@@ -96,15 +95,4 @@ public class MiddlePanel extends JPanel {
     public void setIndex(int index) {
         this.index = index;
     }
-
-    public Card getCard() {
-        return card;
-    }
-
-    public void soulbound(Card card) {
-        this.card = card;
-    }
-     public void perish() {
-        card = null;
-     }
 }

@@ -11,11 +11,13 @@ public class maingameUI extends JPanel {
     private List<JLabel> hand = new ArrayList<>();
     private List<MiddlePanel> middle = new ArrayList<>();
     private List<ConPanel> condition = new ArrayList<>();
+    private List<PeekPanel> peekPanels = new ArrayList<>();
     private JLabel targetBlock = new JLabel();
     private JLabel levelBlock = new JLabel();
     private JLabel scoreBlock = new JLabel();
     private JLabel player = new JLabel();
     private JLabel deck = new JLabel();
+    private int peakcount= 0;
     private List<String> a = new ArrayList<>();
     private List<String> conditionString = new ArrayList<>();
 
@@ -69,6 +71,12 @@ public class maingameUI extends JPanel {
                     }
                 }
             } else if (Channel == Remote.ACTION_CHANNEL) {
+                for (MiddlePanel middlePanel : middle) {
+                    middlePanel.setDisable();
+                }
+                for (ConPanel conPanel : condition) {
+                    conPanel.setDisable();
+                }
                 for (ActionPanel ap : actionPanels) {
                     ap.setEnable();
                 }
@@ -88,6 +96,7 @@ public class maingameUI extends JPanel {
                 for (int i = 0; i < nlist.size(); i++) {
                     middle.get(i).setText(nlist.get(i));
                     middle.get(i).canUseable();
+
                 }
             } else if (Channel == Remote.END_CHANNEL) {
                 for (ActionPanel acp : actionPanels) {
@@ -97,9 +106,13 @@ public class maingameUI extends JPanel {
                 conditionString.clear();
                 for (MiddlePanel jLabel : middle) {
                     jLabel.setText("");
+                    jLabel.perish();
                 }
                 for (ConPanel jLabel : condition) {
                     jLabel.setText("");
+                }
+                for (PeekPanel panel : peekPanels) {
+                    panel.setVisible(false);
                 }
             } else if (Channel == Remote.CONDITION_CHANNEL) {
                 String con = (String) data;
@@ -121,8 +134,35 @@ public class maingameUI extends JPanel {
                     actionPanels.get(i).soulbound(n.get(i));
                 }
             } else if (Channel == Remote.ACTIONEXEC_CHANNEL) {
-                for (int i = 0; i < middle.size(); i++) {
-                    middle.get(i).setDisable();
+                for (MiddlePanel middlePanel : middle) {
+                    middlePanel.setDisable();
+                }
+                for (ConPanel conPanel : condition) {
+                    conPanel.setDisable();
+                }
+            } else if (Channel == Remote.DISABLE) {
+                for (MiddlePanel middlePanel : middle) {
+                    middlePanel.setDisable();
+                }
+                for (ConPanel conPanel : condition) {
+                    conPanel.setDisable();
+                }
+                for (ActionPanel conPanel : actionPanels) {
+                    conPanel.setDisable();
+                }
+            } else if (Channel==Remote.PEEKY) {
+                if (peakcount < 3) {
+                    peekPanels.get(peakcount).setVisible(true);
+                    peekPanels.get(peakcount).setText((String) data);
+                    peakcount++;
+                }
+            } else if (Channel==Remote.FUTURE) {
+                peakcount = 3;
+                List<Card> cardList = (List<Card>) data;
+                for (Card card : cardList) {
+                    String name = card.toString();
+                    peekPanels.get(cardList.indexOf(card)).setVisible(true);
+                    peekPanels.get(cardList.indexOf(card)).setText(name);
                 }
             }
 
@@ -156,6 +196,19 @@ public class maingameUI extends JPanel {
             n.setIndex(i);
             n.Init();
             n.setDisable();
+        }
+        for (int i = 0; i < 3; i++) {
+            PeekPanel n = new PeekPanel();
+            n.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
+            peekPanels.add(n);
+            add(n);
+            UIHelper.apply(n,0.06,0,0.4 +(i*0.07),0
+                    ,0.15,0,0.24,0,
+                    0.5,0.5);
+            n.setIndex(i);
+            n.Init();
+            n.setDisable();
+            n.setVisible(false);
         }
 
         for (int i = 0; i < 3; i++) {

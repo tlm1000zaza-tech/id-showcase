@@ -30,6 +30,7 @@ public class PeekNextCardActionTai extends ActionTai {
         Card preview = game.processDrawnCard(original);
 
         System.out.println("Next card is: " + preview);
+        RemoteEvent.Event().fireEvent(Remote.PEEKY, preview.toString());
 
     }
 

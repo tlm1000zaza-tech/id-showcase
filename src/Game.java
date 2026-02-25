@@ -73,7 +73,10 @@ public class  Game {
 
     private ActionTai tempaction;
 
-
+    private int index1 = 0;
+    private boolean getOri = false;
+    private int index2 = 0;
+    private boolean getDestination = false;
     // ============================================
     // CONSTRUCTOR
     // ============================================
@@ -113,6 +116,15 @@ public class  Game {
                     player.getHand().showHand();
                 } else if (tempaction instanceof ChageConditionActionTai) {
                     RemoteEvent.Event().fireEvent(Remote.REQUESTINDEX_CHANNEL, 3);
+                    player.getHand().showHand();
+                } else if (tempaction instanceof PeekNextCardActionTai) {
+                    tempaction.execute(this,player,0);
+                }else if (tempaction instanceof FutureSightActionTai) {
+                    tempaction.execute(this,player,0);
+                } else if (tempaction instanceof CopyCardActionTai) {
+                    RemoteEvent.Event().fireEvent(Remote.COPY_REQUEST, null);
+
+
                 }
                 middle.show();
 
@@ -468,12 +480,21 @@ public class  Game {
     // ============================================
     // USE ACTION
     // ============================================
-    private void passaction()  {
-        System.out.println("[SIZE] : "+middle.size());
-        System.out.println("[max] : "+maxMiddleCards);
+    private void passaction() {
+        System.out.println("[SIZE] : " + middle.size());
+        System.out.println("[max] : " + maxMiddleCards);
         System.out.println("\nPass...");
-
-        if(middle.size() < maxMiddleCards) {
+        boolean isLimitR = false;
+        for (SpecialCondition con : activeConditions) {
+            System.out.println("[FOUND] : " + con.getName());
+            if (con instanceof LimitedRevealCondition) {
+                System.out.println("[When the Con is sus]");
+                isLimitR = true;
+            }
+        }
+        if (isLimitR) {
+            endLevel();
+        }else if(middle.size() < maxMiddleCards) {
 
             Card newCard = drawCard();
 
@@ -918,7 +939,7 @@ public class  Game {
     private void setupconditionPool() {
 
         conditionPool = new ArrayList<>();
-
+//
         conditionPool.add(new FragileMiddleCondition());
 
         conditionPool.add(new ExpensiveActionCondition());
@@ -926,7 +947,7 @@ public class  Game {
         conditionPool.add(new WeakHandCondition());
 
         conditionPool.add(new LimitedActionsCondition());
-
+//
         conditionPool.add(new LimitedRevealCondition());
 
         conditionPool.add(new HiddenMiddleCardCondition());
@@ -1206,9 +1227,15 @@ public class  Game {
         // reset hand limit
 
         System.out.println("[HAND SIZE] : " + player.getHandSizeLimit());
+        System.out.println("[HAND.SIZE] : " + player.getHand().size());
         player.resetHandLimit();
         System.out.println("[HAND SIZE || RESET] : " + player.getHandSizeLimit());
-
+        System.out.println("[HAND.SIZE || RESET] : " + player.getHand().size());
+        if (player.getHand().size() < player.getHandSizeLimit()) {
+            System.out.println("NEED MORE");
+            player.getHand().getCards().add(drawCard());
+            player.getHand().showHand();
+        }
         // reset middle state
 
         middle.resetHidden();
@@ -1223,7 +1250,7 @@ public class  Game {
 
         // restore middle size
 
-        middle.restoreToMaxSize(this);
+//        middle.restoreToMaxSize(this);
 
 
         // reset actions

@@ -11,6 +11,12 @@ public interface Remote {
     final int ACTIONTEMP_CHANNEL = 9; // Enable Action
     final int ACTIONEXEC_CHANNEL = 10; // Enable Action
     final int REQUESTINDEX_CHANNEL = 11; // Enable Action
+    final int DISABLE = 12; // Enable Action
+    final int PEEKY = 13; // Enable Action
+    final int FUTURE = 14; // Enable Action
+    final int COPY_REQUEST = 15; // Enable Action
+    final int GETORI = 16; // Enable Action
+    final int GETDES = 17; // Enable Action
 
 
     void event(int Channel, Object data) ;

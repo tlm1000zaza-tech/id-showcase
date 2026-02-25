@@ -16,6 +16,7 @@ public class WeakHandCondition extends SpecialCondition {
 
         // draw ผ่าน Game system
         player.getHand().addCard(game.drawCard());
+        player.getHand().showHand();
 
         System.out.println("Player starts with only 1 card.");
 

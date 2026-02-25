@@ -235,6 +235,16 @@ public class Middle {
 
         cards.set(index, card);
 
+        if(hidden[index]) {
+            // ถ้าช่องนี้ถูกซ่อนอยู่ บังคับให้ไพ่ใบใหม่ "คว่ำ (ซ่อน)" ตามไปด้วย
+            card.setHidden(true);
+        } else {
+            // ถ้าช่องนี้เป็นปกติ บังคับให้ไพ่ใบใหม่ "หงาย" ไว้เผื่อไพ่ถูกเซ็ตมาผิด
+            card.setHidden(false);
+        }
+
+        card.setLocked(false);
+
     }
 
 
@@ -320,7 +330,7 @@ public class Middle {
                 status = " [LOCK]";
 
             }
-            System.out.println("[CARD] " + cards.get(i).isHidden());
+            System.out.println("[CARD] " + cards.get(i));
             System.out.println("[HIDDEN ?] " + cards.get(i).isHidden());
             System.out.println("[LOCKED ?] " + cards.get(i).isLocked());
 

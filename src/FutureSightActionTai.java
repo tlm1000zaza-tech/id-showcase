@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class FutureSightActionTai extends ActionTai {
 
     public FutureSightActionTai() {
@@ -23,6 +26,7 @@ public class FutureSightActionTai extends ActionTai {
 
         System.out.println("Next 3 cards:");
 
+        List<Card> list2send = new ArrayList<>();
 
         for(int i = 0; i < 3; i++) {
 
@@ -35,11 +39,11 @@ public class FutureSightActionTai extends ActionTai {
                         game.processDrawnCard(original);
 
                 System.out.println(i + ": " + preview);
-
+                list2send.add(preview);
             }
 
         }
-
+        RemoteEvent.Event().fireEvent(Remote.FUTURE, list2send);
     }
 
     @Override

@@ -8,6 +8,7 @@ public class ActionPanel extends JPanel {
     private ActionTai soul;
     private JButton button = new JButton("BUTTY");
     private ActionListener pass = e -> {
+        RemoteEvent.Event().fireEvent(Remote.DISABLE , null);
         RemoteEvent.Event().fireEvent(Remote.ACTIONTEMP_CHANNEL , soul);
     };
 
