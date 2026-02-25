@@ -8,7 +8,7 @@ public class FinalFormui extends JFrame {
     List<JPanel> panelList = new ArrayList<>();
     FinalFormui() {
         panelList.add(mainGameUI);
-
+        Game game = new Game();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
         setSize(1280,720);

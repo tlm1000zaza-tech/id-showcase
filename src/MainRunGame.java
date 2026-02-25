@@ -16,7 +16,7 @@ public class MainRunGame{
             if (Channel == Remote.CONNECT) {
                 System.out.println("Success");
                 frame.dispose();
-                Game game = new Game();
+
                 FinalFormui a = new FinalFormui();
             }
         });
