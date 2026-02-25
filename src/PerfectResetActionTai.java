@@ -7,7 +7,7 @@ public class PerfectResetActionTai extends ActionTai {
     }
 
     @Override
-    void execute(Game game, PlayerPoker player) {
+    void execute(Game game, PlayerPoker player, int index) {
 
         Middle middle = game.getMiddle();
         Hand hand = player.getHand();

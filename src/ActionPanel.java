@@ -1,22 +1,20 @@
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionListener;
 
 public class ActionPanel extends JPanel {
     private JPanel actionBtn = new JPanel();
     private JPanel passBtn = new JPanel();
     private boolean isUseable;
-    private ActionTai action;
+    private ActionTai soul;
     private JButton button = new JButton("BUTTY");
-    private ActionListener actoinAc = e -> {
-        RemoteEvent.Event().fireEvent(Remote.ACTIONREPLACEMIDDLE_CHANNEL, action);
+    private ActionListener pass = e -> {
+        RemoteEvent.Event().fireEvent(Remote.ACTIONTEMP_CHANNEL , soul);
     };
 
     ActionPanel() {
         setLayout(null);
         add(button);
-        button.setFont(new Font("Arial",Font.BOLD,8));
-        button.addActionListener(actoinAc);
+        button.addActionListener(pass);
     }
     public void Init() {
 
@@ -43,7 +41,8 @@ public class ActionPanel extends JPanel {
     public boolean isUseable() {
         return isUseable;
     }
-    public void soulbound(ActionTai action) {
-        this.action = action;
+
+    public void soulbound(ActionTai soul) {
+        this.soul = soul;
     }
 }

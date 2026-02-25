@@ -45,7 +45,7 @@ public abstract class ActionTai {
 
     abstract String setName();
 
-    abstract void execute(Game game, PlayerPoker player) ;
+    abstract void execute(Game game, PlayerPoker player, int index) ;
 
 
     // =========================

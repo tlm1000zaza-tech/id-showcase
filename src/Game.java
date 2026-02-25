@@ -1,4 +1,3 @@
-import javax.swing.*;
 import java.util.*;
 
 public class  Game {
@@ -44,8 +43,6 @@ public class  Game {
     private int defaultMaxMiddleCards = 3;
 
     private final int maxMiddleCards = 5;
-    private int tempmiddleselect =0;
-    private boolean isSelected = false;
 
 
     // ============================================
@@ -74,6 +71,8 @@ public class  Game {
 
     private Random random = new Random();
 
+    private ActionTai tempaction;
+
 
     // ============================================
     // CONSTRUCTOR
@@ -99,64 +98,40 @@ public class  Game {
                     System.out.println("ended");
                 }
 
-            } else if (Channel == Remote.ACTION_CHANNEL) {
-                if ( level <= MAX_LEVEL) {
-                    pressaction();
-                    middle.show();
-                } else {
-                    System.out.println("ended");
-                }
-            } else if (Channel == Remote.ACTIONREPLACEMIDDLE_CHANNEL) {
-                System.out.println(data);
-                if (data instanceof ReplaceOneMidActionTai) {
-                    if (isSelected) {
-                        ReplaceOneMidActionTai Temp = (ReplaceOneMidActionTai) data;
-                        System.out.println("[GAME] : " +Temp);
-                        Temp.execute(this,player,tempmiddleselect);
-                    } else {
-                        System.out.println("Select something");
-                    }
-                } else if (data instanceof ResetMidActionTai) {
-                    ResetMidActionTai Temp = (ResetMidActionTai) data;
-                    System.out.println("[GAME : 2] : " +Temp);
-                    Temp.execute(this,player);
-                } else if (data instanceof LockMidCardActionTai) {
-                    if (isSelected) {
-                        LockMidCardActionTai Temp = (LockMidCardActionTai) data;
-                        System.out.println("[GAME : 2] : " +Temp);
-                        Temp.execute(this,player,tempmiddleselect);
-                    } else {
-                        System.out.println("Select something");
-                    }
-
+            } else if (Channel == Remote.ACTIONTEMP_CHANNEL) {
+                tempaction = (ActionTai) data;
+                System.out.println("ACTemp");
+                System.out.println("Temp :" + tempaction);
+                if (tempaction instanceof ReplaceOneMidActionTai) {
+                    RemoteEvent.Event().fireEvent(Remote.REQUESTINDEX_CHANNEL, 1);
+                } else if (tempaction instanceof ResetMidActionTai) {
+                    tempaction.execute(this, player, 0);
+                } else if (tempaction instanceof LockMidCardActionTai) {
+                    RemoteEvent.Event().fireEvent(Remote.REQUESTINDEX_CHANNEL, 2);
                 }
                 middle.show();
-                isSelected = false;
-                tempmiddleselect = 0;
-
-            } else if (Channel == Remote.TEMPMIDDLE_CHANNEL) {
-                isSelected =true;
-                tempmiddleselect = (int) data;
-                System.out.println("Temp Select : " +tempmiddleselect);
+            } else if (Channel == Remote.ACTIONEXEC_CHANNEL) {
+                if (tempaction != null) {
+                    tempaction.execute(this, player, (int) data);
+                }
+                tempaction = null;
+                middle.show();
             }
+
         });
 
         Init();
 
     }
-    public void pressaction() {
-        System.out.println("\nSelect action index:");
 
-        for(int i = 0; i < player.getActions().size(); i++) {
-
-            System.out.println(i + ": " + player.getActions().get(i));
-
-        }
-    }
     // ============================================
     // MAIN GAME LOOP
     // ============================================
-
+    public void executeaction(Object index) {
+        if (tempaction instanceof ReplaceOneMidActionTai) {
+            tempaction.execute(this, player,(int) index);
+        }
+    }
     public void runGame()  {
 
         System.out.println("===== START GAME =====");
@@ -533,7 +508,7 @@ public class  Game {
 
             score -= actionTai.getCost();
 
-            actionTai.execute(this, player);
+//            actionTai.execute(this, player, index);
 
             actionTai.makeUsed();
 
@@ -1128,16 +1103,14 @@ public class  Game {
     // ========================================
     private void setupAction() {
         player.getActions().clear();
-        List<ActionTai> actionTais = new ArrayList<>();
+
         for(int i = 0; i < actionTaiPool.size(); i++) {
 
             if(isUnlocked(i)) {
                 player.getActions().add(actionTaiPool.get(i));
-                actionTais.add(actionTaiPool.get(i));
             }
         }
-        RemoteEvent.Event().fireEvent(Remote.ACTIONBUTTON_CHANNEL, actionTais);
-        actionTais.clear();
+        RemoteEvent.Event().fireEvent(Remote.ACTIONBINDING_CHANNEL, actionTaiPool);
     }
 
 
@@ -1226,8 +1199,9 @@ public class  Game {
 
         // reset hand limit
 
+        System.out.println("[HAND SIZE] : " + player.getHandSizeLimit());
         player.resetHandLimit();
-
+        System.out.println("[HAND SIZE || RESET] : " + player.getHandSizeLimit());
 
         // reset middle state
 
@@ -1271,8 +1245,8 @@ public class  Game {
 
 
         // refill hand
-
-        refillPlayerHand(player);
+//        if ()
+//        refillPlayerHand(player);
 
     }
 

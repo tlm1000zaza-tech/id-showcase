@@ -12,7 +12,7 @@ public class ChageConditionActionTai extends ActionTai {
     }
 
     @Override
-    void execute(Game game, PlayerPoker player) {
+    void execute(Game game, PlayerPoker player, int index) {
 
         if(game.getActiveConditions().isEmpty()) {
 
@@ -32,7 +32,7 @@ public class ChageConditionActionTai extends ActionTai {
 
         System.out.print("Select condition index to remove: ");
 
-        int index = game.getScanner().nextInt();
+
 
 
         if(index < 0 ||

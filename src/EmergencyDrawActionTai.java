@@ -7,7 +7,7 @@ public class EmergencyDrawActionTai extends ActionTai {
     }
 
     @Override
-    void execute(Game game, PlayerPoker player) {
+    void execute(Game game, PlayerPoker player, int index) {
 
         if(!canUse(game, player)) {
 

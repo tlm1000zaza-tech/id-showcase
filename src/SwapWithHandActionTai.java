@@ -7,7 +7,7 @@ public class SwapWithHandActionTai extends ActionTai {
     }
 
     @Override
-    public void execute(Game game, PlayerPoker player)  {
+    public void execute(Game game, PlayerPoker player, int index)  {
 
         if(!canUse(game, player)) {
 
