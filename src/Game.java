@@ -108,8 +108,14 @@ public class  Game {
                     tempaction.execute(this, player, 0);
                 } else if (tempaction instanceof LockMidCardActionTai) {
                     RemoteEvent.Event().fireEvent(Remote.REQUESTINDEX_CHANNEL, 2);
+                } else if (tempaction instanceof  ResetHandActionTai) {
+                    tempaction.execute(this, player, 0);
+                    player.getHand().showHand();
+                } else if (tempaction instanceof ChageConditionActionTai) {
+                    RemoteEvent.Event().fireEvent(Remote.REQUESTINDEX_CHANNEL, 3);
                 }
                 middle.show();
+
             } else if (Channel == Remote.ACTIONEXEC_CHANNEL) {
                 if (tempaction != null) {
                     tempaction.execute(this, player, (int) data);

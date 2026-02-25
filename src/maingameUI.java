@@ -10,7 +10,7 @@ public class maingameUI extends JPanel {
     private List<JLabel> odinaryButton = new ArrayList<>();
     private List<JLabel> hand = new ArrayList<>();
     private List<MiddlePanel> middle = new ArrayList<>();
-    private List<JLabel> condition = new ArrayList<>();
+    private List<ConPanel> condition = new ArrayList<>();
     private JLabel targetBlock = new JLabel();
     private JLabel levelBlock = new JLabel();
     private JLabel scoreBlock = new JLabel();
@@ -98,7 +98,7 @@ public class maingameUI extends JPanel {
                 for (MiddlePanel jLabel : middle) {
                     jLabel.setText("");
                 }
-                for (JLabel jLabel : condition) {
+                for (ConPanel jLabel : condition) {
                     jLabel.setText("");
                 }
             } else if (Channel == Remote.CONDITION_CHANNEL) {
@@ -107,6 +107,7 @@ public class maingameUI extends JPanel {
                 System.out.println("[MAIN] - " + con);
                 for (int i = 0; i < conditionString.size(); i++) {
                     condition.get(i).setText(conditionString.get(i));
+                    condition.get(i).canUseable();
                 }
 
 
@@ -158,13 +159,16 @@ public class maingameUI extends JPanel {
         }
 
         for (int i = 0; i < 3; i++) {
-            JLabel n = new JLabel();
+            ConPanel n = new ConPanel();
             n.setBorder(BorderFactory.createLineBorder(Color.BLUE,2));
             condition.add(n);
             add(n);
             UIHelper.apply(n,0.06,0,0.95 - (i*0.07),0
                     ,0.15,0,0.1,0,
                     0.5,0.5);
+            n.setIndex(i);
+            n.Init();
+            n.setDisable();
         }
 
         for (int i = 0; i < 2; i++) {
