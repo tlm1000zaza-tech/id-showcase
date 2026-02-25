@@ -173,6 +173,13 @@ public class maingameUI extends JPanel {
                         middlePanel.setEnableDes();
                     }
                 }
+            } else if (Channel == Remote.CONDITIONLIST_CHANNEL) {
+                List<String> sl = (List<String>) data;
+                conditionString.clear();
+                for (int i = 0; i < sl.size(); i++) {
+                    conditionString.add(sl.get(i));
+                    condition.get(i).setText(sl.get(i));
+                }
             }
 //            else if (Channel==Remote.GETORI) {
 ////                System.out.println("[D]");

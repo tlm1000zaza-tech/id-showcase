@@ -89,7 +89,7 @@ public class  Game {
         player = new Player();
 
         conditionPool = new ArrayList<>();
-        level = 5;
+        level = 1;
         score = 100;
 
         RemoteEvent.Event().onEvent((Channel, data) -> {
@@ -133,6 +133,12 @@ public class  Game {
             } else if (Channel == Remote.ACTIONEXEC_CHANNEL) {
                 if (tempaction != null) {
                     tempaction.execute(this, player, (int) data);
+                    List<String> sl = new ArrayList<>();
+                    for (SpecialCondition con : activeConditions) {
+                        System.out.println(con.getName());
+                        sl.add(con.getName());
+                    }
+                    RemoteEvent.Event().fireEvent(Remote.CONDITIONLIST_CHANNEL, sl);
                 }
 
                 middle.show();
@@ -662,7 +668,7 @@ public class  Game {
             Init();
         } else {
             showFinalResult();
-            showStartMenu();
+            RemoteEvent.Event().fireEvent(Remote.ENDSCREEN, score);
         }
 
     }
