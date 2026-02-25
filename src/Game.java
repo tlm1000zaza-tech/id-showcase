@@ -945,6 +945,8 @@ public class  Game {
         conditionPool.add(new ExpensiveActionCondition());
 
         conditionPool.add(new WeakHandCondition());
+        conditionPool.add(new WeakHandCondition());
+        conditionPool.add(new WeakHandCondition());
 
         conditionPool.add(new LimitedActionsCondition());
 //

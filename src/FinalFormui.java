@@ -4,10 +4,11 @@ import java.util.List;
 
 public class FinalFormui extends JFrame {
 
-    maingameUI mainGameUI = new maingameUI();
+    RulePlay rulePlay = new RulePlay();
+//    maingameUI mainGameUI = new maingameUI();
     List<JPanel> panelList = new ArrayList<>();
     FinalFormui() {
-        panelList.add(mainGameUI);
+        panelList.add(rulePlay);
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
@@ -22,6 +23,8 @@ public class FinalFormui extends JFrame {
             add(panelList.get(i));
             UIHelper.apply(panelList.get(i), 1,0,0,0,1,0,0,0);
         }
-        mainGameUI.GenLowerRow();
+
+        rulePlay.Init();
+//        mainGameUI.GenLowerRow();
     }
 }
