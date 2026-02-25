@@ -17,7 +17,10 @@ public interface Remote {
     final int COPY_REQUEST = 15; // Enable Action
     final int GETORI = 16; // Enable Action
     final int GETDES = 17; // Enable Action
+    final int SEARCHDES = 18; // Enable Action
+    final int KUYTOK = 500; // Enable Action
 
+    int RESETCON = 625;
 
     void event(int Channel, Object data) ;
 }

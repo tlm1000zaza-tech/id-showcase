@@ -13,6 +13,8 @@ public class MiddlePanel extends JPanel {
     private JButton buttonselect = new JButton("");
     private List<JButton> bt = new ArrayList<>();
     private JButton buttonLock = new JButton("");
+    private JButton buttonsource = new JButton("");
+    private JButton buttondes = new JButton("");
     private ActionListener pass = e -> {
         RemoteEvent.Event().fireEvent(Remote.ACTIONEXEC_CHANNEL, index);
         System.out.println("E");
@@ -21,13 +23,28 @@ public class MiddlePanel extends JPanel {
     MiddlePanel() {
         setLayout(null);
         buttonLock.setContentAreaFilled(false);
+        buttondes.setContentAreaFilled(false);
+        buttonsource.setContentAreaFilled(false);
+
+        buttonsource.addActionListener(e -> {
+            RemoteEvent.Event().fireEvent(Remote.KUYTOK, index);
+        });
+
+        buttondes.addActionListener(e -> {
+            RemoteEvent.Event().fireEvent(Remote.SEARCHDES, index);
+            System.out.println(index);
+
+            RemoteEvent.Event().fireEvent(Remote.DISABLE, index);
+        });
         bt.add(buttonselect);
         bt.add(buttonLock);
+        bt.add(buttonsource);
+        bt.add(buttondes);
         for (JButton b : bt) {
             add(b);
             b.addActionListener(pass);
         }
-
+        buttondes.removeActionListener(pass);
         RemoteEvent.Event().onEvent((Channel, data) -> {
             if (Channel == Remote.REQUESTINDEX_CHANNEL) {
                 if ((int) data == 1) {
@@ -36,6 +53,9 @@ public class MiddlePanel extends JPanel {
                     setEnableLock();
                     System.out.println("K");
                 }
+            } else if (Channel == Remote.COPY_REQUEST) {
+                setEnableSource();
+                System.out.println("hllo");
             }
         });
 
@@ -51,15 +71,20 @@ public class MiddlePanel extends JPanel {
         for (JButton b : bt) {
             b.setEnabled(false);
         }
+        System.out.println("DISABLE");
+        isUseable = false;
     }
     public void setEnableSelect() {
         for (JButton b : bt) {
             b.setEnabled(false);
         }
         if (isUseable) {
+            System.out.println("USEABLE");
             buttonselect.setEnabled(true);
             setComponentZOrder(buttonselect,0);
 
+        } else {
+            System.out.println("PLS");
         }
     }
 
@@ -72,6 +97,24 @@ public class MiddlePanel extends JPanel {
             setComponentZOrder(buttonLock,0);
         }
     }
+    public void setEnableSource() {
+        for (JButton b : bt) {
+            b.setEnabled(false);
+        }
+        if (isUseable) {
+            buttonsource.setEnabled(true);
+            setComponentZOrder(buttonsource,0);
+        }
+    }
+    public void setEnableDes() {
+        for (JButton b : bt) {
+            b.setEnabled(false);
+        }
+        if (isUseable) {
+            buttondes.setEnabled(true);
+            setComponentZOrder(buttondes,0);
+        }
+    }
 
     public void setText(String txt) {
         buttonselect.setText(txt);
@@ -79,6 +122,7 @@ public class MiddlePanel extends JPanel {
 
     public void canUseable() {
         isUseable = true;
+        System.out.println("TRUE");
     }
 
     public boolean isUseable() {
