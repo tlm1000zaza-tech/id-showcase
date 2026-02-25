@@ -32,6 +32,26 @@ public class Card {
         this.locked = false;
     }
 
+    public String getImagePath() {
+
+        String rankStr = "";
+
+        switch(rank) {
+
+            case ACE: rankStr = "A"; break;
+            case KING: rankStr = "K"; break;
+            case QUEEN: rankStr = "Q"; break;
+            case JACK: rankStr = "J"; break;
+
+            default:
+                rankStr = String.valueOf(rank.getSymbol());
+
+        }
+
+        return "src/cards/" + rankStr + type.getSymbol() + ".jpg";
+
+    }
+
 
     // copy constructor (ใช้ copy card อย่างปลอดภัย)
     public Card(Card other) {
@@ -136,5 +156,7 @@ public class Card {
         return rank + " " + type;
 
     }
+
+
 
 }

@@ -1,9 +1,11 @@
 import javax.swing.*;
-        import java.awt.event.ActionListener;
+import java.awt.*;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MiddlePanel extends JPanel {
+    private JLabel cardLabel;
     private JPanel actionBtn = new JPanel();
     private JPanel passBtn = new JPanel();
     private boolean isUseable;
@@ -22,6 +24,9 @@ public class MiddlePanel extends JPanel {
 
     MiddlePanel() {
         setLayout(null);
+        cardLabel = new JLabel();
+        cardLabel.setBounds(0,0,80,120);
+        add(cardLabel);
         buttonLock.setContentAreaFilled(false);
         buttondes.setContentAreaFilled(false);
         buttonsource.setContentAreaFilled(false);
@@ -60,6 +65,26 @@ public class MiddlePanel extends JPanel {
         });
 
     }
+
+
+    public void setCardIcon(ImageIcon icon) {
+
+        Image img = icon.getImage();
+
+        Image newImg = img.getScaledInstance(
+                cardLabel.getWidth(),
+                cardLabel.getHeight(),
+                Image.SCALE_SMOOTH
+        );
+
+        cardLabel.setBounds(0, 0, getWidth(), getHeight());
+
+        cardLabel.setIcon(new ImageIcon(newImg));
+
+
+
+    }
+
     public void Init() {
         for (JButton b : bt) {
             UIHelper.apply(b,1,0,0,0,1,0,0,0);

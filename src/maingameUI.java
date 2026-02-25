@@ -23,6 +23,8 @@ public class maingameUI extends JPanel {
 
     private Font font = new Font("Arial", Font.BOLD, 15);
     private Font font2 = new Font("Arial", Font.BOLD, 10);
+
+    private GamePanel gamePanel;
     maingameUI() {
         odinaryButton.add(targetBlock);
         odinaryButton.add(scoreBlock);
@@ -83,19 +85,64 @@ public class maingameUI extends JPanel {
             } else if (Channel == Remote.SHOW_CHANNEL) {
                 List<String> fg = (List<String>) data;
                 for (JLabel n : hand) {
-                    n.setText("");
+                    n.setIcon(null);
                 }
-                for (String h : fg) {
-                    hand.get(fg.indexOf(h)).setText(h);
+                for (int i = 0; i < fg.size(); i++) {
+
+                    String full = fg.get(i);
+
+                    String fileName = convertToFileName(full);
+
+                    ImageIcon icon =
+                            new ImageIcon("src/cards/" + fileName + ".jpg");
+
+// scale image
+                    Image img = icon.getImage();
+
+                    Image newImg = img.getScaledInstance(
+                            hand.get(i).getWidth(),
+                            hand.get(i).getHeight(),
+                            Image.SCALE_SMOOTH
+                    );
+
+                    ImageIcon scaledIcon = new ImageIcon(newImg);
+
+                    hand.get(i).setIcon(scaledIcon);
+                    String path = "src/cards/" + fileName + ".jpg";
+
+                    System.out.println(path);
+
+                    ImageIcon icon1 = new ImageIcon(path);
+
                 }
 
             } else if (Channel == Remote.MIDDLESHOW_CHANNEL) {
                 List<String> nlist = (List<String>) data;
-                System.out.println("[MIDDLE]" +middle.size());
-                System.out.println("[DATA]" + nlist.size());
+
                 for (int i = 0; i < nlist.size(); i++) {
-                    middle.get(i).setText(nlist.get(i));
-                    middle.get(i).canUseable();
+
+                    String full = nlist.get(i);
+
+                    String fileName = convertToFileName(full);
+
+                    ImageIcon icon =
+                            new ImageIcon("src/cards/" + fileName + ".jpg");
+
+// SCALE
+                    Image img = icon.getImage();
+
+                    Image newImg = img.getScaledInstance(
+                            middle.get(i).getWidth(),
+                            middle.get(i).getHeight(),
+                            Image.SCALE_SMOOTH
+                    );
+
+                    ImageIcon scaledIcon = new ImageIcon(newImg);
+
+                    middle.get(i).setCardIcon(icon);
+
+                    middle.get(i).setText("");
+
 
                 }
             } else if (Channel == Remote.END_CHANNEL) {
@@ -302,5 +349,49 @@ public class maingameUI extends JPanel {
         UIHelper.apply(deck,0.06,0,0.30,0
                 ,0.15,0,0.40,0,
                 0.5,0.5);
+    }
+
+    private String convertToFileName(String full) {
+
+        // full = "ACE CLUB"
+
+        String[] parts = full.split(" ");
+
+        String rank = parts[0];
+        String suit = parts[1];
+
+        String r = "";
+        String s = "";
+
+        switch(rank) {
+
+            case "ACE": r = "A"; break;
+            case "KING": r = "K"; break;
+            case "QUEEN": r = "Q"; break;
+            case "JACK": r = "J"; break;
+            case "TEN": r = "T"; break;
+
+            case "NINE": r = "9"; break;
+            case "EIGHT": r = "8"; break;
+            case "SEVEN": r = "7"; break;
+            case "SIX": r = "6"; break;
+            case "FIVE": r = "5"; break;
+            case "FOUR": r = "4"; break;
+            case "THREE": r = "3"; break;
+            case "TWO": r = "2"; break;
+
+        }
+
+        switch(suit) {
+
+            case "SPADE": s = "S"; break;
+            case "HEART": s = "H"; break;
+            case "DIAMOND": s = "D"; break;
+            case "CLUB": s = "C"; break;
+
+        }
+
+        return r + s;
+
     }
 }

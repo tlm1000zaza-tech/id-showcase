@@ -159,4 +159,9 @@ public class Hand {
 
     }
 
+    //-----------------------------------------------------------
+
+    public void removeCard(Card card) {
+        cards.remove(card);
+    }
 }
