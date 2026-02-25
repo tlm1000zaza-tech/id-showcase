@@ -19,7 +19,7 @@ public class PlayerPoker {
     private Hand hand;
 
     // list ของ Action ที่ผู้เล่นมี
-    private ArrayList<Action> actions;
+    private ArrayList<ActionTai> actionTais;
 
     // จำนวนไพ่สูงสุดในมือ
     // (ถูกแก้โดย WeakHandCondition)
@@ -40,7 +40,7 @@ public class PlayerPoker {
 
         hand = new Hand();
 
-        actions = new ArrayList<>();
+        actionTais = new ArrayList<>();
 
     }
 
@@ -81,30 +81,30 @@ public class PlayerPoker {
     // ACTION SYSTEM
     // ========================================
 
-    public void addAction(Action action) {
+    public void addAction(ActionTai actionTai) {
 
-        actions.add(action);
-
-    }
-
-
-    public ArrayList<Action> getActions() {
-
-        return actions;
+        actionTais.add(actionTai);
 
     }
 
 
-    public Action getAction(int index) {
+    public ArrayList<ActionTai> getActions() {
 
-        return actions.get(index);
+        return actionTais;
+
+    }
+
+
+    public ActionTai getAction(int index) {
+
+        return actionTais.get(index);
 
     }
 
 
     public int getActionCount() {
 
-        return actions.size();
+        return actionTais.size();
 
     }
 
@@ -118,11 +118,11 @@ public class PlayerPoker {
 
     public void resetAllActions() {
 
-        for(Action action : actions) {
+        for(ActionTai actionTai : actionTais) {
 
-            action.resetUsage();
-            action.resetExtraCost();
-            action.resetMaxUse();
+            actionTai.resetUsage();
+            actionTai.resetExtraCost();
+            actionTai.resetMaxUse();
 
         }
 
@@ -137,15 +137,15 @@ public class PlayerPoker {
 
         System.out.println("\n--- ACTION LIST ---");
 
-        for(int i = 0; i < actions.size(); i++) {
+        for(int i = 0; i < actionTais.size(); i++) {
 
-            Action action = actions.get(i);
+            ActionTai actionTai = actionTais.get(i);
 
             System.out.println(
                     i + ": " +
-                            action.getName() +
-                            " | Cost: " + action.getCost() +
-                            " | Use Left: " + action.getRemainingUse()
+                            actionTai.getName() +
+                            " | Cost: " + actionTai.getCost() +
+                            " | Use Left: " + actionTai.getRemainingUse()
             );
 
         }

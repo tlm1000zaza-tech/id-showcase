@@ -1,6 +1,6 @@
-public class FutureSightAction extends Action{
+public class FutureSightActionTai extends ActionTai {
 
-    public FutureSightAction() {
+    public FutureSightActionTai() {
 
         super(12,2);
 

@@ -1,8 +1,6 @@
-import java.util.Scanner;
+public class ResetMidActionTai extends ActionTai {
 
-public class ResetMidAction extends Action{
-
-    public ResetMidAction() {
+    public ResetMidActionTai() {
         super(18,1);
     }
 

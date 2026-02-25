@@ -1,6 +1,6 @@
-public class CopyCardAction extends Action {
+public class CopyCardActionTai extends ActionTai {
 
-    public CopyCardAction() {
+    public CopyCardActionTai() {
 
         super(20, 1);
 

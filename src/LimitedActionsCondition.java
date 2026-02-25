@@ -8,16 +8,16 @@ public class LimitedActionsCondition extends SpecialCondition{
     @Override
     public void apply(Game game,PlayerPoker player) {
 
-        for(Action action : player.getActions()) {
+        for(ActionTai actionTai : player.getActions()) {
 
             // ยกเว้น ChangeConditionAction
 
-            if(action instanceof ChageConditionAction) {
+            if(actionTai instanceof ChageConditionActionTai) {
 
                 continue;
             }
 
-            action.decreaseMaxUse(1);
+            actionTai.decreaseMaxUse(1);
 
         }
 

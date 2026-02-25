@@ -1,6 +1,6 @@
-public class ResetHandAction extends Action {
+public class ResetHandActionTai extends ActionTai {
 
-    public ResetHandAction() {
+    public ResetHandActionTai() {
         super(12, 3);
     }
 

@@ -1,6 +1,6 @@
-public class PeekNextCardAction extends Action {
+public class PeekNextCardActionTai extends ActionTai {
 
-    public PeekNextCardAction() {
+    public PeekNextCardActionTai() {
 
         super(5, 3);
 

@@ -1,6 +1,6 @@
-public class PerfectResetAction extends Action{
+public class PerfectResetActionTai extends ActionTai {
 
-    public PerfectResetAction() {
+    public PerfectResetActionTai() {
 
         super(25,1);
 

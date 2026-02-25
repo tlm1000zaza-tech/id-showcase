@@ -1,6 +1,6 @@
-public class ReplaceOneMidAction extends Action {
+public class ReplaceOneMidActionTai extends ActionTai {
 
-    public ReplaceOneMidAction() {
+    public ReplaceOneMidActionTai() {
         super(8, 3);
     }
 
@@ -64,4 +64,56 @@ public class ReplaceOneMidAction extends Action {
 
     }
 
+    void execute(Game game, PlayerPoker player, int index) {
+
+        if(!canUse(game, player)) {
+
+            System.out.println("Action already used this level.");
+            return;
+
+        }
+
+        Middle middle = game.getMiddle();
+
+        middle.show();
+
+        System.out.println("Select index:");
+
+
+        // check index
+        if(index < 0 || index >= middle.size()) {
+
+            System.out.println("Invalid index");
+            return;
+
+        }
+
+
+        // check lock
+        if(middle.isLocked(index)) {
+
+            System.out.println("This card is locked.");
+            return;
+
+        }
+
+
+        // check hidden
+        if(middle.isHidden(index)) {
+
+            System.out.println("This card is hidden.");
+            return;
+
+        }
+
+
+        Card newCard = game.drawCard();
+
+        middle.setCard(index, newCard);
+        System.err.println("[REPLACE] : NEW CARD - "+newCard);
+
+
+        System.out.println("Card replaced.");
+
+    }
 }

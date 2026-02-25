@@ -8,9 +8,9 @@ public class ExpensiveActionCondition extends SpecialCondition{
     @Override
     public void apply(Game game, PlayerPoker player) {
 
-        for(Action action : player.getActions()) {
+        for(ActionTai actionTai : player.getActions()) {
 
-            action.addExtraCost(2);
+            actionTai.addExtraCost(2);
 
         }
 

@@ -1,6 +1,6 @@
-public class SwapWithHandAction extends Action {
+public class SwapWithHandActionTai extends ActionTai {
 
-    public SwapWithHandAction() {
+    public SwapWithHandActionTai() {
 
         super(12, 2);
 

@@ -1,6 +1,6 @@
-public class EmergencyDrawAction extends Action{
+public class EmergencyDrawActionTai extends ActionTai {
 
-    public EmergencyDrawAction() {
+    public EmergencyDrawActionTai() {
 
         super(14,2);
 

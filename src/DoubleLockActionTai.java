@@ -1,6 +1,6 @@
-public class DoubleLockAction extends Action{
+public class DoubleLockActionTai extends ActionTai {
 
-    public DoubleLockAction() {
+    public DoubleLockActionTai() {
 
         super(12,2);
 

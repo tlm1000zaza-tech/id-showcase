@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.Action;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +10,7 @@ public class maingameUI extends JPanel {
     private List<ButtonPanel> Button = new ArrayList<>();
     private List<JLabel> odinaryButton = new ArrayList<>();
     private List<JLabel> hand = new ArrayList<>();
-    private List<JLabel> middle = new ArrayList<>();
+    private List<MiddlePanel> middle = new ArrayList<>();
     private List<JLabel> condition = new ArrayList<>();
     private JLabel targetBlock = new JLabel();
     private JLabel levelBlock = new JLabel();
@@ -87,6 +88,7 @@ public class maingameUI extends JPanel {
                 System.out.println("[DATA]" + nlist.size());
                 for (int i = 0; i < nlist.size(); i++) {
                     middle.get(i).setText(nlist.get(i));
+                    middle.get(i).setEnable();
                 }
             } else if (Channel == Remote.END_CHANNEL) {
                 for (ActionPanel acp : actionPanels) {
@@ -94,8 +96,9 @@ public class maingameUI extends JPanel {
                 }
                 a.clear();
                 conditionString.clear();
-                for (JLabel jLabel : middle) {
+                for (MiddlePanel jLabel : middle) {
                     jLabel.setText("");
+                    jLabel.setDisable();
                 }
                 for (JLabel jLabel : condition) {
                     jLabel.setText("");
@@ -111,6 +114,14 @@ public class maingameUI extends JPanel {
 
             } else if (Channel == Remote.SCORE_CHANNEL) {
                 scoreBlock.setText("Score : " + String.valueOf(data));
+            } else if (Channel == Remote.ACTIONBUTTON_CHANNEL) {
+                List<ActionTai> actionlist = (List<ActionTai>) data;
+                for (int i = 0; i < actionlist.size(); i++) {
+                    ActionTai tempacp = actionlist.get(i);
+                    System.out.println(i + " : " + tempacp.getName());
+                    actionPanels.get(i).setText(tempacp.getName());
+                    actionPanels.get(i).soulbound(actionlist.get(i));
+                }
             }
         });
     }
@@ -132,13 +143,16 @@ public class maingameUI extends JPanel {
         }
         //maddle
         for (int i = 0; i < 5; i++) {
-            JLabel n = new JLabel();
+            MiddlePanel n = new MiddlePanel();
             n.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
             middle.add(n);
             add(n);
             UIHelper.apply(n,0.06,0,0.40 + (i*0.07),0
                     ,0.15,0,0.40,0,
                     0.5,0.5);
+            n.Init();
+            n.setIndex(i);
+            n.setDisable();
         }
 
         for (int i = 0; i < 3; i++) {

@@ -1,6 +1,6 @@
-public class ChageConditionAction extends Action {
+public class ChageConditionActionTai extends ActionTai {
 
-    public ChageConditionAction() {
+    public ChageConditionActionTai() {
 
         super(15, 1);
 

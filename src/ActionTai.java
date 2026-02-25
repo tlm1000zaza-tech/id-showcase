@@ -3,7 +3,7 @@
 // คลาสแม่ของ Action ทุกใบ
 // ========================================
 
-public abstract class Action {
+public abstract class ActionTai {
 
     // =========================
     // FIELD
@@ -26,7 +26,7 @@ public abstract class Action {
     // CONSTRUCTOR
     // =========================
 
-    public Action(int cost, int maxUse) {
+    public ActionTai(int cost, int maxUse) {
 
         this.cost = cost;
 
