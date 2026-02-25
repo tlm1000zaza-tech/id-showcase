@@ -3,26 +3,21 @@ import java.awt.*;
 
 public class GamePanel extends JPanel {
 
-    ImageLabel test;
-
     public GamePanel() {
+
+        System.out.println("GamePanel Loaded");
 
         setLayout(null);
 
-        setBorder(BorderFactory.createLineBorder(Color.RED));
+        setBackground(Color.BLUE);
 
-        test = new ImageLabel("/background.png");
+        JLabel text = new JLabel("THIS IS GAME PANEL");
 
-        add(test);
+        text.setForeground(Color.WHITE);
 
-        UIHelper.apply(
-                test,
-                0.5,0,
-                0.5,0,
-                1,0,
-                1,0,
-                0.5,0.5
-        );
+        text.setBounds(500,300,300,50);
+
+        add(text);
 
     }
 
