@@ -8,8 +8,8 @@ public class ActionPanel extends JPanel {
     private ActionTai soul;
     private JButton button = new JButton("BUTTY");
     private ActionListener pass = e -> {
-        RemoteEvent.Event().fireEvent(Remote.DISABLE , null);
         RemoteEvent.Event().fireEvent(Remote.ACTIONTEMP_CHANNEL , soul);
+//        RemoteEvent.Event().fireEvent(Remote.DISABLE , null);
     };
 
     ActionPanel() {
@@ -25,6 +25,7 @@ public class ActionPanel extends JPanel {
 
     public void setDisable() {
         button.setEnabled(false);
+
     }
     public void setEnable() {
         if (isUseable) {

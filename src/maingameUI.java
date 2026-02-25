@@ -71,9 +71,9 @@ public class maingameUI extends JPanel {
                     }
                 }
             } else if (Channel == Remote.ACTION_CHANNEL) {
-                for (MiddlePanel middlePanel : middle) {
-                    middlePanel.setDisable();
-                }
+//                for (MiddlePanel middlePanel : middle) {
+//                    middlePanel.setDisable();
+//                }
                 for (ConPanel conPanel : condition) {
                     conPanel.setDisable();
                 }
@@ -107,6 +107,7 @@ public class maingameUI extends JPanel {
                 for (MiddlePanel jLabel : middle) {
                     jLabel.setText("");
                     jLabel.perish();
+                    jLabel.setDisable();
                 }
                 for (ConPanel jLabel : condition) {
                     jLabel.setText("");
@@ -164,7 +165,28 @@ public class maingameUI extends JPanel {
                     peekPanels.get(cardList.indexOf(card)).setVisible(true);
                     peekPanels.get(cardList.indexOf(card)).setText(name);
                 }
+            } else if (Channel == Remote.GETORI) {
+                System.out.println(data);
+                for (MiddlePanel middlePanel : middle) {
+                    if (middle.indexOf(middlePanel) != (int) data) {
+                        System.out.println(middle.indexOf(middlePanel));
+                        middlePanel.setEnableDes();
+                    }
+                }
+            } else if (Channel == Remote.CONDITIONLIST_CHANNEL) {
+                List<String> sl = (List<String>) data;
+                conditionString.clear();
+                for (int i = 0; i < sl.size(); i++) {
+                    conditionString.add(sl.get(i));
+                    condition.get(i).setText(sl.get(i));
+                }
             }
+//            else if (Channel==Remote.GETORI) {
+////                System.out.println("[D]");
+////                if (data instanceof Integer) {
+////                    System.out.println(data);
+////                }
+//            }
 
         });
     }

@@ -102,6 +102,11 @@ public class  Game {
                 }
 
             } else if (Channel == Remote.ACTIONTEMP_CHANNEL) {
+                getOri = false;
+                getDestination = false;
+                index1 =0;
+                index2 =0;
+
                 tempaction = (ActionTai) data;
                 System.out.println("ACTemp");
                 System.out.println("Temp :" + tempaction);
@@ -123,17 +128,55 @@ public class  Game {
                     tempaction.execute(this,player,0);
                 } else if (tempaction instanceof CopyCardActionTai) {
                     RemoteEvent.Event().fireEvent(Remote.COPY_REQUEST, null);
-
-
                 }
                 middle.show();
-
             } else if (Channel == Remote.ACTIONEXEC_CHANNEL) {
                 if (tempaction != null) {
                     tempaction.execute(this, player, (int) data);
+                    List<String> sl = new ArrayList<>();
+                    for (SpecialCondition con : activeConditions) {
+                        System.out.println(con.getName());
+                        sl.add(con.getName());
+                    }
+                    RemoteEvent.Event().fireEvent(Remote.CONDITIONLIST_CHANNEL, sl);
                 }
-                tempaction = null;
+
                 middle.show();
+            } else if (Channel == Remote.KUYTOK) {
+                System.out.println("[D]");
+                if (data instanceof Integer) {
+                    int i = (int) data;
+                    index1 = i;
+                    System.out.println(i);
+                    RemoteEvent.Event().fireEvent(Remote.GETORI, i);
+                }
+
+//                index1 = (int) data;
+//                getOri = true;
+//            } else if (Channel == Remote.GETDES) {
+//                System.out.println("[COPY] - Index : " + data);
+//                index2 = (int) data;
+//                getDestination = true;
+//            }
+//            if (getOri && getDestination) {
+//
+//                System.out.println("[SOURCE] - Index : " + index1);
+//                System.out.println("[COPY] - Index : " + index2);
+//                getOri = false;
+//                getDestination = false;
+//                executeCopy(index1, index2);
+            } else if (Channel == Remote.SEARCHDES) {
+                if (data instanceof Integer) {
+                    int i = (int) data;
+                    index2 = i;
+                    System.out.println("[SOURCE] : "+ index1 + " || [DESTINATION]" + index2);
+
+                        System.out.println("Sdas");
+                    System.out.println(tempaction);
+                        ((CopyCardActionTai) tempaction).execute(this, player,index1, index2);
+                    middle.show();
+
+                }
             }
 
         });
@@ -148,6 +191,16 @@ public class  Game {
     public void executeaction(Object index) {
         if (tempaction instanceof ReplaceOneMidActionTai) {
             tempaction.execute(this, player,(int) index);
+        }
+    }
+
+    public void test() {
+
+    }
+    public void executeCopy(int index, int index_2) {
+        if (tempaction instanceof CopyCardActionTai) {
+            CopyCardActionTai n =  (CopyCardActionTai) tempaction;
+            n.execute(this, player,index, index_2);
         }
     }
     public void runGame()  {
@@ -615,7 +668,7 @@ public class  Game {
             Init();
         } else {
             showFinalResult();
-            showStartMenu();
+            RemoteEvent.Event().fireEvent(Remote.ENDSCREEN, score);
         }
 
     }
@@ -1277,6 +1330,10 @@ public class  Game {
             }
 
         }
+
+
+
+
 
 
         // refill hand

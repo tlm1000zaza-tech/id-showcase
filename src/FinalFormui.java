@@ -4,19 +4,10 @@ import java.util.List;
 
 public class FinalFormui extends JFrame {
 
-    RulePlay rulePlay = new RulePlay();
-    PokerHandRank pokerHandRank = new PokerHandRank();
-    ActionAndCondition actionAndCondition = new ActionAndCondition();
-    ActionAndCondition1 actionAndCondition1 = new ActionAndCondition1();
-    ActionAndCondition2 actionAndCondition2 = new ActionAndCondition2();
-//    maingameUI mainGameUI = new maingameUI();
+    maingameUI mainGameUI = new maingameUI();
     List<JPanel> panelList = new ArrayList<>();
     FinalFormui() {
-//        panelList.add(rulePlay);
-//        panelList.add(pokerHandRank);
-//        panelList.add(actionAndCondition);
-//        panelList.add(actionAndCondition1);
-        panelList.add(actionAndCondition2);
+        panelList.add(mainGameUI);
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
@@ -31,14 +22,6 @@ public class FinalFormui extends JFrame {
             add(panelList.get(i));
             UIHelper.apply(panelList.get(i), 1,0,0,0,1,0,0,0);
         }
-
-//        rulePlay.Init();
-//        pokerHandRank.Init();
-//        actionAndCondition.Init();
-//        actionAndCondition1.Init();
-        actionAndCondition2.Init();
-
-
-//        mainGameUI.GenLowerRow();
+        mainGameUI.GenLowerRow();
     }
 }
