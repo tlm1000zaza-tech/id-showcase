@@ -23,5 +23,7 @@ public interface Remote {
     int ENDSCREEN =654;
     int RESETCON = 625;
 
+
+    int CONNECT = 8441;
     void event(int Channel, Object data) ;
 }

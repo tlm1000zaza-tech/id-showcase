@@ -12,7 +12,11 @@ public class MainRunGame{
         frame.add(new LoginFrame());
 
         frame.setVisible(true);
-
+        RemoteEvent.Event().onEvent((Channel, data) -> {
+            if (Channel == Remote.CONNECT) {
+                System.out.println("Success");
+            }
+        });
     }
 
 }

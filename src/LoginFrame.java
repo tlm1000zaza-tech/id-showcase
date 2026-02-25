@@ -43,6 +43,7 @@ public class LoginFrame extends JPanel {
                 if(success){
 
                     result.setText("Login Success");
+                    RemoteEvent.Event().fireEvent(Remote.CONNECT, null);
 
                 }
                 else{
