@@ -17,9 +17,11 @@ public class MainRunGame{
                 System.out.println("Success");
                 frame.dispose();
 
-                FinalFormui a = new FinalFormui();
+                FinalFormui ui = new FinalFormui();
+                Game g = new Game();
             }
         });
+
     }
 
 }
