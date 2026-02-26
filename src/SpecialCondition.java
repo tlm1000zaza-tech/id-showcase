@@ -63,7 +63,10 @@ public abstract class SpecialCondition {
     }
 
 
-
+//    public String getImgepath() {
+//
+//        return "src/assets/special/"+name.toLowerCase()+".png";
+//    }
     // ========================================
     // APPLY EFFECT (ABSTRACT)
     //

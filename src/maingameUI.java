@@ -124,7 +124,8 @@ public class maingameUI extends JPanel {
                     String full = nlist.get(i);
 
                     String fileName = convertToFileName(full);
-
+//                    System.out.println("[FILL] : " + full);
+//                    System.out.println("[DIR] src/cards/" + fileName + ".jpg");
                     ImageIcon icon =
                             new ImageIcon("src/cards/" + fileName + ".jpg");
 
@@ -151,6 +152,7 @@ public class maingameUI extends JPanel {
                 }
                 a.clear();
                 conditionString.clear();
+                resetMiddle();
                 for (MiddlePanel jLabel : middle) {
                     jLabel.setText("");
                     jLabel.perish();
@@ -392,6 +394,12 @@ public class maingameUI extends JPanel {
         }
 
         return r + s;
+    }
 
+    public void resetMiddle() {
+
+        for(MiddlePanel panel : middle) {
+            panel.resetCard();
+        }
     }
 }

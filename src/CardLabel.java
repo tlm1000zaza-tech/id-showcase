@@ -21,32 +21,53 @@ public class CardLabel extends JLabel {
     public CardLabel(Card card, JPanel parent, int x, int y, int width, int height) {
 
         this.card = card;
-
         this.parent = parent;
 
         this.originalX = x;
         this.originalY = y;
-
         this.originalW = width;
         this.originalH = height;
 
-
-        // โหลดรูปจาก path ของ card
         ImageIcon icon = new ImageIcon(card.getImagePath());
 
-        // scale รูป
         Image img = icon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
 
-        // set รูป
         setIcon(new ImageIcon(img));
 
-
-        // set ตำแหน่ง
         setBounds(x, y, width, height);
 
-
-        // สำคัญ
         setOpaque(false);
+
+
+        // ⭐ เพิ่มตรงนี้
+        addMouseListener(new MouseAdapter() {
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                hoverOn();
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                hoverOff();
+            }
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+
+                toggleSelect();
+
+                if(parent instanceof GamePanel) {
+
+                    GamePanel panel = (GamePanel) parent;
+
+                    panel.cardClicked(card);
+
+                }
+
+            }
+
+        });
 
     }
 

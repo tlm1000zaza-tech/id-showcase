@@ -110,7 +110,10 @@ public class ReplaceOneMidActionTai extends ActionTai {
 
         middle.setCard(index, newCard);
 
+        useCount++;
 
+
+        System.out.println("Replace maxUse = " + maxUse);
         System.out.println("Card replaced.");
 
     }

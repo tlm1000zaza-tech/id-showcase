@@ -154,8 +154,21 @@ public class MiddlePanel extends JPanel {
         return isUseable;
     }
 
-    public void soulbound(ActionTai soul) {
-        this.soul = soul;
+    public void soulbound(Card card) {
+
+        this.card = card;
+
+        // ⭐ ถ้ามีไพ่
+        if(card != null) {
+
+            // โหลดรูปจาก path
+            ImageIcon icon = new ImageIcon(card.getImagePath());
+
+            // ใส่รูปลง label
+            setCardIcon(icon);
+
+        }
+
     }
 
     public int getIndex() {
@@ -170,10 +183,12 @@ public class MiddlePanel extends JPanel {
         return card;
     }
 
-    public void soulbound(Card card) {
-        this.card = card;
-    }
      public void perish() {
         card = null;
+     }
+
+     public void resetCard() {
+
+        cardLabel.setIcon(null);
      }
 }

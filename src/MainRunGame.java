@@ -3,24 +3,24 @@ import javax.swing.*;
 public class MainRunGame{
 
     public static void main(String[] args) {
-
-        JFrame frame = new JFrame("Login");
-
-        frame.setSize(400,300);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        frame.add(new LoginFrame());
-
-        frame.setVisible(true);
-        RemoteEvent.Event().onEvent((Channel, data) -> {
-            if (Channel == Remote.CONNECT) {
-                System.out.println("Success");
-                frame.dispose();
+//
+//        JFrame frame = new JFrame("Login");
+//
+//        frame.setSize(400,300);
+//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//
+//        frame.add(new LoginFrame());
+//
+//        frame.setVisible(true);
+//        RemoteEvent.Event().onEvent((Channel, data) -> {
+//            if (Channel == Remote.CONNECT) {
+//                System.out.println("Success");
+//                frame.dispose();
 
                 FinalFormui ui = new FinalFormui();
                 Game g = new Game();
-            }
-        });
+//            }
+//        });
 
     }
 

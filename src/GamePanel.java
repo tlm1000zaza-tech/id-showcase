@@ -70,7 +70,7 @@ public class GamePanel extends JPanel {
 
     }
 
-    private void handleCardClick(Card card) {
+    public void cardClicked(Card card) {
 
         // คลิกใบที่เลือกอยู่แล้ว = เล่น
         if(card == selectedCard) {
