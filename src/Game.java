@@ -40,7 +40,7 @@ public class Game {
 
     private int handSizeLimit = 2;
 
-    private int defaultMaxMiddleCards = 3;
+    private int defaultMaxMiddleCards = 5;
 
     private int maxMiddleCards = defaultMaxMiddleCards;
 
@@ -114,6 +114,8 @@ public class Game {
             setupconditionPool();
 
             generateActiveConditions();
+
+            resetMaxMiddleCards();
 
             start();
 
@@ -254,16 +256,12 @@ public class Game {
 
         }
 
-        System.out.println("==========================\n");
+        System.out.println("==========================");
 
 
 
         // MAIN TURN LOOP
         while(true) {
-
-            System.out.println("\n-----------------");
-
-            System.out.println("Middle:");
 
             middle.show();
 
@@ -296,9 +294,9 @@ public class Game {
 
                     System.out.println("\nSelect action index:");
 
-                    for(int i = 0; i < player.getActions().size(); i++) {
+                    for(int i = 0; i < actionPool.size(); i++) {
 
-                        System.out.println(i + ": " + player.getActions().get(i));
+                        System.out.println(i + ": " + actionPool.get(i).setName());
 
                     }
 
@@ -324,7 +322,9 @@ public class Game {
 
                     System.out.println("\nPass...");
 
-                    if(middle.size() < maxMiddleCards) {
+
+
+                    if (middle.size() < maxMiddleCards) {
 
                         Card newCard = drawCard();
 
@@ -1025,8 +1025,8 @@ public class Game {
     // SET MAX MIDDLE CARDS
     // ใช้โดย LimitedRevealCondition
     // ========================================
-    public void setMaxMiddleCards(int value) {
-        maxMiddleCards = Math.max(3,value);
+    public void setMaxMiddleCards() {
+        maxMiddleCards -= 3 ;
     }
 
 
@@ -1194,50 +1194,9 @@ public class Game {
         return middle;
     }
 
-
     public int getLevel() {
         return level;
     }
 
-    public int getScore() {
-        return score;
-    }
-    public HandRank getTargetRank() {
-        return targetRank;
-    }
 
-    // ========================================
-// PASS TURN METHOD
-// ใช้เมื่อผู้เล่นกด "Pass"
-//
-// หน้าที่:
-// - เปิดไพ่ใหม่ใน Middle ถ้ายังไม่เต็ม
-// - ถ้า Middle เต็ม → จบ Level
-// ========================================
-    public void passTurn() throws Exception {
-
-        // ตรวจว่า Middle ยังมีช่องว่างอยู่หรือไม่
-        if (middle.size() < maxMiddleCards) {
-
-            // จั่วไพ่ใหม่จาก Deck
-            Card newCard = drawCard();
-
-            // เพิ่มเข้า Middle
-            middle.placeCard(newCard);
-
-            // เพิ่มจำนวนไพ่ที่เปิดแล้ว (ใช้ในบาง condition)
-            revealedCount++;
-
-            // แสดงไพ่ที่เปิด (ใช้กับ Console version)
-            System.out.println("Revealed: " + newCard);
-
-        }
-        else {
-
-            // ถ้า Middle เต็มแล้ว → จบ Level ทันที
-            endLevel();
-
-        }
-
-    }
 }

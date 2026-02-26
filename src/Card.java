@@ -133,7 +133,7 @@ public class Card {
 
         }
 
-        return rank + " " + type;
+        return rank.getRankSymbol() + " " + type.getSuitSymbol();
 
     }
 

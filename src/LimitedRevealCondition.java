@@ -8,7 +8,7 @@ public class LimitedRevealCondition extends SpecialCondition {
     @Override
     public void apply(Game game, PlayerPoker player) {
 
-        game.setMaxMiddleCards(2);
+        game.setMaxMiddleCards();
 
         System.out.println("Reveal limited to 2 cards.");
 

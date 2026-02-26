@@ -248,7 +248,6 @@ public class Middle {
 
             locked[index] = false;
             doubleLocked[index] = false;
-            hidden[index] = false;
 
             card.resetState();
 
